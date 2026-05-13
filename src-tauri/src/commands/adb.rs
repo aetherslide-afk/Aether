@@ -15,9 +15,19 @@ pub struct Device {
 
 fn adb_bin() -> String {
     #[cfg(target_os = "windows")]
-    return "platform-tools/adb.exe".to_string();
+    {
+        // Check for ADB bundled next to the executable first
+        if let Ok(exe) = std::env::current_exe() {
+            let bundled = exe.parent().unwrap_or(std::path::Path::new("."))
+                .join("platform-tools").join("adb.exe");
+            if bundled.exists() {
+                return bundled.to_string_lossy().to_string();
+            }
+        }
+        "adb.exe".to_string()
+    }
     #[cfg(not(target_os = "windows"))]
-    return "adb".to_string();
+    "adb".to_string()
 }
 
 fn run_adb(args: &[&str]) -> Result<String, String> {
