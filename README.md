@@ -22,6 +22,8 @@ Aether is a legitimate, legal tool built around standard Android Debug Bridge (A
 
 ## Download
 
+> **Note:** Pre-built releases are not yet functional — the app requires a vrSrc API key to connect to the public mirror, which is currently pending approval. Once the key is issued, releases will be published and fully working.
+
 Grab the latest release for your platform from the [Releases](../../releases) page.
 
 | Platform | File |
