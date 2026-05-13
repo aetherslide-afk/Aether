@@ -1,0 +1,31 @@
+[package]
+name = "aether"
+version = "0.1.0"
+description = "Aether - Cross-platform Android sideloader for Meta Quest"
+authors = ["SnowBallD"]
+edition = "2021"
+
+[lib]
+name = "aether_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dirs = "5"
+reqwest = { version = "0.12", features = ["stream"] }
+tokio = { version = "1", features = ["full"] }
+tokio-util = { version = "0.7", features = ["io"] }
+futures-util = "0.3"
+sevenz-rust = { version = "0.6", features = ["aes256"] }
+base64 = "0.22"
+dashmap = "6"
+lazy_static = "1"
+urlencoding = "2"
+zip = "2"
+walkdir = "2"

@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core palette — dark gray with subtle violet tint */
+  --color-background:       #141417;
+  --color-surface:          #1b1b1f;
+  --color-surface-elevated: #222227;
+  --color-surface-hover:    #28282e;
+  --color-border:           #2e2e36;
+  --color-border-subtle:    #242428;
+
+  /* Brand */
+  --color-primary:          #7b5ea7;
+  --color-primary-hover:    #9171c8;
+  --color-primary-dim:      rgba(123, 94, 167, 0.15);
+  --color-primary-glow:     rgba(123, 94, 167, 0.25);
+
+  /* Text */
+  --color-text:             #e2e2f0;
+  --color-text-muted:       #5e5e7a;
+  --color-text-subtle:      #3a3a54;
+
+  /* Semantic */
+  --color-success:          #34d399;
+  --color-success-dim:      rgba(52, 211, 153, 0.12);
+  --color-warning:          #f59e0b;
+  --color-warning-dim:      rgba(245, 158, 11, 0.12);
+  --color-danger:           #f87171;
+  --color-danger-dim:       rgba(248, 113, 113, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 14px; }
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Refined scrollbars */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 99px;
+  transition: background 0.2s;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-subtle); }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth transitions on interactive elements */
+button, input, select, textarea { transition-duration: 150ms; }
+
+/* Utility classes — CSS variables don't support /opacity modifier in Tailwind v4 */
+.bg-primary       { background-color: var(--color-primary); }
+.bg-primary-dim   { background-color: var(--color-primary-dim); }
+.bg-success-dim   { background-color: var(--color-success-dim); }
+.bg-warning-dim   { background-color: var(--color-warning-dim); }
+.bg-danger-dim    { background-color: var(--color-danger-dim); }
+.text-primary     { color: var(--color-primary); }
+.text-success     { color: var(--color-success); }
+.text-warning     { color: var(--color-warning); }
+.text-danger      { color: var(--color-danger); }
+.border-primary   { border-color: var(--color-primary); }
+.border-success   { border-color: var(--color-success); }
