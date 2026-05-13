@@ -7,6 +7,8 @@
 
 **Aether** is a free, open-source, cross-platform sideloading tool for Meta Quest headsets. It provides a clean, modern interface for installing, managing, and updating Android applications on your device — running natively on Windows, macOS, and Linux.
 
+Built with [Tauri](https://tauri.app), Aether is designed to be lightweight and efficient — a native binary with a small footprint, no Electron overhead, and a UI that feels fast on every platform. The goal was a tool that works the same way whether you're on Windows, macOS, or Linux, without compromising on quality or experience.
+
 Aether is a legitimate, legal tool built around standard Android Debug Bridge (ADB) functionality. It does not modify, crack, or bypass any software protections. Intended use cases include installing applications not available through official storefronts, personal backups, save management, and contributing new titles back to the community library. Users are solely responsible for ensuring that their use of this tool complies with all applicable laws and the terms of service of their devices.
 
 ## Features
