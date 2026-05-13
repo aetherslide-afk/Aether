@@ -31,14 +31,16 @@ fn adb_bin() -> String {
 }
 
 fn run_adb(args: &[&str]) -> Result<String, String> {
-    let output = Command::new(adb_bin())
-        .args(args)
-        .output()
-        .map_err(|e| format!("ADB not found: {e}"))?;
-    if output.status.success() {
-        Ok(String::from_utf8_lossy(&output.stdout).to_string())
-    } else {
-        Err(String::from_utf8_lossy(&output.stderr).to_string())
+    match Command::new(adb_bin()).args(args).output() {
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Err("ADB_NOT_FOUND".to_string()),
+        Err(e) => Err(format!("Failed to run ADB: {e}")),
+        Ok(output) => {
+            if output.status.success() {
+                Ok(String::from_utf8_lossy(&output.stdout).to_string())
+            } else {
+                Err(String::from_utf8_lossy(&output.stderr).to_string())
+            }
+        }
     }
 }
 
@@ -55,32 +57,34 @@ pub fn adb_list_devices() -> Result<Vec<Device>, String> {
 
     for line in output.lines().skip(1) {
         let line = line.trim();
-        if line.is_empty() || !line.contains("device") {
-            continue;
-        }
+        if line.is_empty() { continue; }
         let parts: Vec<&str> = line.split_whitespace().collect();
-        if parts.len() < 2 || parts[1] != "device" {
+        if parts.len() < 2 { continue; }
+        let id = parts[0].to_string();
+
+        if parts[1] == "unauthorized" {
+            devices.push(Device {
+                id,
+                name: "Unauthorized".to_string(),
+                model: "Unauthorized".to_string(),
+                device_type: "unauthorized".to_string(),
+                free_space: None,
+                total_space: None,
+            });
             continue;
         }
-        let id = parts[0].to_string();
-        let model = parts
-            .iter()
+
+        if parts[1] != "device" { continue; }
+
+        let model = parts.iter()
             .find(|p| p.starts_with("model:"))
             .map(|p| p.trim_start_matches("model:").replace('_', " "))
             .unwrap_or_else(|| id.clone());
 
         let device_type = if id.contains(':') { "wifi" } else { "usb" }.to_string();
-
         let free_space = get_free_space(&id).ok();
 
-        devices.push(Device {
-            id,
-            name: model.clone(),
-            model,
-            device_type,
-            free_space,
-            total_space: None,
-        });
+        devices.push(Device { id, name: model.clone(), model, device_type, free_space, total_space: None });
     }
     Ok(devices)
 }

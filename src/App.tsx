@@ -25,6 +25,11 @@ export default function App() {
 
   useEffect(() => {
     async function init() {
+      // Check ADB availability immediately so the status bar reflects it
+      invoke<unknown[]>("adb_list_devices")
+        .then((devs) => { useStore.getState().setAdbStatus("ok"); useStore.getState().setDevices(devs as any); })
+        .catch((e) => { if (String(e).includes("ADB_NOT_FOUND")) useStore.getState().setAdbStatus("error"); });
+
       try {
         const dataDir = await invoke<string>("get_data_dir");
         const configPath = `${dataDir}/public.json`;

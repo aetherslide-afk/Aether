@@ -40,6 +40,10 @@ interface AppStore {
   activeMirror: Mirror | null;
   setActiveMirror: (mirror: Mirror | null) => void;
 
+  // Health
+  adbStatus: "ok" | "error" | "unknown";
+  setAdbStatus: (status: "ok" | "error" | "unknown") => void;
+
   // UI
   activeTab: "library" | "device" | "contribute" | "settings";
   setActiveTab: (tab: "library" | "device" | "contribute" | "settings") => void;
@@ -102,6 +106,9 @@ export const useStore = create<AppStore>((set) => ({
   setMirrors: (mirrors) => set({ mirrors }),
   activeMirror: null,
   setActiveMirror: (activeMirror) => set({ activeMirror }),
+
+  adbStatus: "unknown",
+  setAdbStatus: (adbStatus) => set({ adbStatus }),
 
   activeTab: "library",
   setActiveTab: (activeTab) => set({ activeTab }),

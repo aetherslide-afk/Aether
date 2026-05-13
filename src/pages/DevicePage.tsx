@@ -18,6 +18,7 @@ const SYSTEM_PREFIXES = [
 
 export function DevicePage() {
   const { devices, setDevices, selectedDevice, setSelectedDevice } = useStore();
+  const { setAdbStatus } = useStore();
   const [scanning, setScanning]           = useState(false);
   const [wirelessIp, setWirelessIp]       = useState("");
   const [packages, setPackages]           = useState<InstalledPackage[]>([]);
@@ -36,8 +37,11 @@ export function DevicePage() {
     try {
       const found = await invoke<Device[]>("adb_list_devices");
       setDevices(found);
+      setAdbStatus("ok");
       if (found.length > 0 && !selectedDevice) setSelectedDevice(found[0]);
-    } catch {}
+    } catch (e) {
+      if (String(e).includes("ADB_NOT_FOUND")) setAdbStatus("error");
+    }
     finally { setScanning(false); }
   }
 

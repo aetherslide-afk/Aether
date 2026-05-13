@@ -20,7 +20,7 @@ export interface Device {
   id: string;
   name: string;
   model: string;
-  type: "usb" | "wifi";
+  type: "usb" | "wifi" | "unauthorized";
   freeSpace?: number;
   totalSpace?: number;
 }
