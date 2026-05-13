@@ -43,6 +43,11 @@ Grab the latest release for your platform from the [Releases](../../releases) pa
 
 ## Important Notes
 
+> **macOS "App is Damaged" Warning** — macOS Gatekeeper blocks apps that are not notarized with an Apple Developer certificate. If you see this message, run the following command in Terminal and try opening again:
+> ```bash
+> xattr -cr /Applications/Aether.app
+> ```
+
 > **Antivirus False Positives** — Some antivirus software may flag Aether due to its use of ADB and archive extraction. The app is fully open source — you can inspect and build the code yourself.
 
 > **Developer Mode** — Your Quest headset must have Developer Mode enabled before ADB can connect. Enable it from the Meta mobile app under your headset's settings.
